@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App", "App\App.csproj", "{CCB1804A-0AEF-484C-B583-0E3B891C3EC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CetDocsApp", "App\CetDocsApp.csproj", "{CCB1804A-0AEF-484C-B583-0E3B891C3EC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{5724709D-4855-4A33-BDE8-14DE2918BA23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio", "Model\Dominio.csproj", "{5724709D-4855-4A33-BDE8-14DE2918BA23}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicos", "Servicos\Servicos.csproj", "{78BE74C9-DFF9-4E87-9E3B-95367C248273}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "Infra\Infra.csproj", "{5E63DF60-24C8-48C3-AD71-09EAE52F1376}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CetDocsApi", "CetDocApi\CetDocsApi.csproj", "{916918D1-9339-4FF2-A638-6AD525374C92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{5724709D-4855-4A33-BDE8-14DE2918BA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5724709D-4855-4A33-BDE8-14DE2918BA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5724709D-4855-4A33-BDE8-14DE2918BA23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78BE74C9-DFF9-4E87-9E3B-95367C248273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78BE74C9-DFF9-4E87-9E3B-95367C248273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78BE74C9-DFF9-4E87-9E3B-95367C248273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78BE74C9-DFF9-4E87-9E3B-95367C248273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E63DF60-24C8-48C3-AD71-09EAE52F1376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E63DF60-24C8-48C3-AD71-09EAE52F1376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E63DF60-24C8-48C3-AD71-09EAE52F1376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E63DF60-24C8-48C3-AD71-09EAE52F1376}.Release|Any CPU.Build.0 = Release|Any CPU
+		{916918D1-9339-4FF2-A638-6AD525374C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{916918D1-9339-4FF2-A638-6AD525374C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{916918D1-9339-4FF2-A638-6AD525374C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{916918D1-9339-4FF2-A638-6AD525374C92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

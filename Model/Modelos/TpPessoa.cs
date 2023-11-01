@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model
+namespace Dominio.Modelos
 {
-	public class Role
-	{
+    public class TpPessoa
+    {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Nome { get; set; }
     }
 }

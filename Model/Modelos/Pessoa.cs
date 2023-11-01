@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model
+namespace Dominio.Modelos
 {
     public class Pessoa
     {
@@ -13,9 +13,9 @@ namespace Model
         public string Email { get; set; }
         public string Telefone { get; set; }
         public string CPF { get; set; }
-        public string Etinia {get; set;}
+        public string Etinia { get; set; }
         public string Sexo { get; set; }
         public string DataNascimento { get; set; }
-                
+
     }
 }
