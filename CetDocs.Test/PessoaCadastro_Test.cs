@@ -13,18 +13,18 @@ namespace CetDocs.Test
 {
 	internal class PessoaCadastro_Test
 	{
-		//AAA
-		[Fact]
-		public async Task VerificaSeCadastroDePessoaEstaSendoFeito()
-		{
-			//Arrange
-			var PessoaRepository = new Mock<IPessoaRepository>();
-			var Pessoa = new Pessoa();
-			object value = PessoaRepository.Setup(x => x.Cadastrar<Pessoa>(Pessoa)).Returns(Task.FromResult(true));
+		////AAA
+		//[Fact]
+		//public async Task VerificaSeCadastroDePessoaEstaSendoFeito()
+		//{
+		//	//Arrange
+		//	var PessoaRepository = new Mock<IPessoaRepository>();
+		//	var Pessoa = new Pessoa();
+		//	object value = PessoaRepository.Setup(x => x.Cadastrar<Pessoa>(Pessoa)).Returns(Task.FromResult(true));
 		
-			//act
+		//	//act
 
-			//assert
-		}
+		//	//assert
+		//}
 	}
 }

@@ -21,7 +21,7 @@ namespace Servicos
 			_Configuration = Configuration;
 		}
 
-		public async Task<bool> Cadastrar(Pessoa obj)
+		public async Task  Cadastrar(Pessoa obj)
 		{
 			try
 			{
@@ -32,10 +32,12 @@ namespace Servicos
 					connection.Open();
 					var result = await connection.ExecuteAsync(sql, obj);
 					obj.Id = result;
+					if (obj.Id == 0)
+					{
+						throw new Exception("Erro ao cadastrar pessoa");
+					}
 				}
-				var retorno = bool.Parse("true");
-				return retorno;
-
+			
 			}
 			catch (Exception ex)
 			{

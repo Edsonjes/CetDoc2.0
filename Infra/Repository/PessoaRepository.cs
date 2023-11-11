@@ -21,27 +21,26 @@ namespace Infra.Repository
 			PessoaServices = pessoaServices;
 		}
 
-		public async Task<bool> Cadastrar<TValidador>(Pessoa obj) where TValidador : AbstractValidator<bool>
+		public async Task<Pessoa> Cadastrar(Pessoa obj) 
 		{
 			try
 			{
-				bool retorno;
+				
 				if (obj != null)
 				{
 					var PessoaCadastro = PessoaServices.Cadastrar(obj);
-					retorno = await PessoaCadastro;
-					return retorno;
+					
 				}
 				
-				return false;
-				
+				return obj;
+
 			}
 			catch (Exception ex)
 			{
 				throw ex.InnerException;
 			}
 		}
-		public Task<Pessoa> Atualizar<TValidador>(Pessoa obj) where TValidador : AbstractValidator<Pessoa>
+		public Task<Pessoa> Atualizar(Pessoa obj) 
 		{
 			return null;
 		}
@@ -51,7 +50,7 @@ namespace Infra.Repository
 			throw new NotImplementedException();
 		}
 
-		
+
 
 		public Task<Pessoa> Excluir(Pessoa obj)
 		{
@@ -60,13 +59,14 @@ namespace Infra.Repository
 
 		public async Task<List<Pessoa>> Listar()
 		{
-		   List<Pessoa> pessoas = new List<Pessoa>();
+			List<Pessoa> pessoas = new List<Pessoa>();
 
 			var Listar = PessoaServices.Listar();
 
-		    return await Listar;
+			return await Listar;
 
 
 		}
-	}
+
+    }
 }
