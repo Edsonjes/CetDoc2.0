@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicos", "Servicos\Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "Infra\Infra.csproj", "{5E63DF60-24C8-48C3-AD71-09EAE52F1376}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CetDocsApi", "CetDocApi\CetDocsApi.csproj", "{916918D1-9339-4FF2-A638-6AD525374C92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CetDocsApi", "CetDocApi\CetDocsApi.csproj", "{916918D1-9339-4FF2-A638-6AD525374C92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CetDocs.Test", "CetDocs.Test\CetDocs.Test.csproj", "{A4974791-8605-4972-A7A5-61D1FDDD5C37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{916918D1-9339-4FF2-A638-6AD525374C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{916918D1-9339-4FF2-A638-6AD525374C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{916918D1-9339-4FF2-A638-6AD525374C92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4974791-8605-4972-A7A5-61D1FDDD5C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4974791-8605-4972-A7A5-61D1FDDD5C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4974791-8605-4972-A7A5-61D1FDDD5C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4974791-8605-4972-A7A5-61D1FDDD5C37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
