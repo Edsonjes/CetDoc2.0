@@ -8,5 +8,10 @@ namespace App.Controllers
 		{
 			return View();
 		}
+
+		public IActionResult CadastrarPessoa()
+		{
+            return View();
+        }
 	}
 }
