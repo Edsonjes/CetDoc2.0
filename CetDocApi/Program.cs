@@ -3,8 +3,7 @@ using Infra.Repository;
 using Dominio.Modelos;
 using Dominio.Interfaces;
 using Infra.Repository;
-
-
+using AutoMapper;
 
 namespace CetDocApi
 {
@@ -15,6 +14,7 @@ namespace CetDocApi
 			
 			var builder = WebApplication.CreateBuilder(args);
 			
+			
 			// Add services to the container.
 
 			builder.Services.AddControllers();
@@ -22,6 +22,7 @@ namespace CetDocApi
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 			IServiceCollection ServicePessoaColection = builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
+			builder.Services.AddAutoMapper(typeof(Mapper));
 
 
 			var app = builder.Build();

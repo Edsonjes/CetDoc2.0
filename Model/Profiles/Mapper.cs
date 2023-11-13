@@ -1,0 +1,18 @@
+﻿using AutoMapper;
+using Dominio.Modelos;
+using Dominio.ViewModel;
+
+
+namespace Dominio.Profiles
+{
+	internal class Mapper : Profile
+	{
+		public Mapper()
+		{
+			var config = new MapperConfiguration(cfg => {
+							cfg.CreateMap<PessoaViewModel, Pessoa>().ReverseMap();
+			});
+
+		}
+	}
+}

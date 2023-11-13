@@ -1,35 +1,39 @@
 ﻿using Dominio.Interfaces;
-using Dominio.Modelos;
+using Dominio;
 using FluentValidation;
 using Servicos;
-
 using Microsoft.Extensions.Configuration;
+using AutoMapper;
+using Dominio.ViewModel;
+using Dominio.Modelos;
 
 namespace Infra.Repository
 {
 	public class PessoaRepository : IPessoaRepository
 	{
 		public IConfiguration _Configuration;
-		public PessoaRepository(IConfiguration Configuration)
+	 	public PessoaRepository(IConfiguration Configuration)
 		{
 			_Configuration = Configuration;
 		}
 		public readonly PessoaServices PessoaServices;
+		public readonly Mapper _Mapper;
 
-		public PessoaRepository(PessoaServices pessoaServices)
+		public PessoaRepository(PessoaServices pessoaServices, Mapper mapper)
 		{
 			PessoaServices = pessoaServices;
+			_Mapper = mapper;
 		}
 
-		public async Task<Pessoa> Cadastrar(Pessoa obj) 
+		public async Task<PessoaViewModel> Cadastrar(PessoaViewModel obj) 
 		{
 			try
 			{
-				
+
 				if (obj != null)
 				{
-					var PessoaCadastro = PessoaServices.Cadastrar(obj);
-					
+					var mapObj= _Mapper.Map<Pessoa>(obj);
+					var PessoaCadastro = PessoaServices.Cadastrar(mapObj);
 				}
 				
 				return obj;
@@ -40,33 +44,25 @@ namespace Infra.Repository
 				throw ex.InnerException;
 			}
 		}
-		public Task<Pessoa> Atualizar(Pessoa obj) 
-		{
-			return null;
-		}
-
-		public Task<Pessoa> BuscarPorId(int id)
+	
+		public Task<PessoaViewModel> Atualizar(PessoaViewModel obj)
 		{
 			throw new NotImplementedException();
 		}
 
-
-
-		public Task<Pessoa> Excluir(Pessoa obj)
+		public Task<PessoaViewModel> Excluir(PessoaViewModel obj)
 		{
 			throw new NotImplementedException();
 		}
 
-		public async Task<List<Pessoa>> Listar()
+		public Task<PessoaViewModel> BuscarPorId(int id)
 		{
-			List<Pessoa> pessoas = new List<Pessoa>();
-
-			var Listar = PessoaServices.Listar();
-
-			return await Listar;
-
-
+			throw new NotImplementedException();
 		}
 
-    }
+		public Task<List<PessoaViewModel>> Listar()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

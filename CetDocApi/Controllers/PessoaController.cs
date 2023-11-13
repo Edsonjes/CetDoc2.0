@@ -4,6 +4,7 @@ using FluentValidation;
 using Dominio.Interfaces;
 using Dominio.Modelos;
 using Infra.Repository;
+using Dominio.ViewModel;
 
 namespace CetDocsApi.Controllers
 {
@@ -20,7 +21,7 @@ namespace CetDocsApi.Controllers
 
 		[HttpPost]
 		[Route("CadastrarPessoa")]
-		public async Task<IActionResult> CadastrarPessoa(Pessoa pessoa)
+		public async Task<IActionResult> CadastrarPessoa(PessoaViewModel pessoa)
 		{
 			var cadPessoa = await _pessoaRepository.Cadastrar(pessoa);
 			return Ok();

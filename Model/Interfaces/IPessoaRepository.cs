@@ -1,8 +1,9 @@
 ﻿using Dominio.Modelos;
+using Dominio.ViewModel;
 
 namespace Dominio.Interfaces
 {
-	public interface IPessoaRepository : IBaseServicos<Pessoa>
+	public interface IPessoaRepository : IBaseServicos<PessoaViewModel>
 	{
 	}
 }
