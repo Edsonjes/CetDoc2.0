@@ -1,7 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Pessoas";
+    ViewBag.Title = " Cadastro Pessoas";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string Logo = "assets/media/logos/LogoCetDocs198x138.png";
+    var titulo = ViewBag.Title;
 }
 
 <!--begin::Entry-->
@@ -15,7 +16,7 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header">
                     <div class="card-title">
-                        <h3 class="card-label">Cadastra Pessoa</h3>
+                        <h3 class="card-label">@titulo</h3>
                     </div>
                 </div>
                 <div class="card-body">
@@ -39,7 +40,67 @@
                                 </div>
                             </div>
                             <div id="collapseOne7" class="collapse show" data-parent="#accordionExample7">
-                                <div class="card-body pl-12">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</div>
+                                
+                               
+                                    <!--begin::Form-->
+                                    <form>
+                                        <div class="form-group">
+                                            <label>
+                                                Email address
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="email" class="form-control" placeholder="Enter email" />
+                                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">
+                                                Password
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Static:</label>
+                                            <p class="form-control-plaintext text-muted">email@example.com</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleSelect1">
+                                                Example select
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <select class="form-control" id="exampleSelect1">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleSelect2">
+                                                Example multiple select
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <select multiple="multiple" class="form-control" id="exampleSelect2">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-1">
+                                            <label for="exampleTextarea">
+                                                Example textarea
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                        </div>
+                                      
+                                    </form>
+                                    <!--end::Form-->
+                                
+                             
                             </div>
                         </div>
                         <div class="card">
@@ -86,10 +147,14 @@
                         </div>
                     </div>
                     <!--end::Accordion-->
-                 
+
                 </div>
             </div>
             <!--end::Card-->
+            <div class="card-footer">
+                <button type="reset" class="btn btn-primary mr-2">Submit</button>
+                <button type="reset" class="btn btn-secondary">Cancel</button>
+            </div>
             <!--end::Body-->
         </div>
         <!--end::Card-->
