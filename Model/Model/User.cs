@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dominio.Modelos
+namespace Dominio.Model
 {
-    internal class User : Pessoa
+    public class User : Pessoa
     {
         public string Login { get; set; }
         public string Password { get; set; }

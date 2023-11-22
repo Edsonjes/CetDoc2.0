@@ -1,4 +1,4 @@
-﻿using Dominio.Modelos;
+﻿using Dominio.Model;
 using Dominio.ViewModel;
 
 namespace Dominio.Interfaces

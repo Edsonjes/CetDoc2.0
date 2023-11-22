@@ -1,15 +1,11 @@
-﻿using Dominio.Modelos;
-using FluentValidation;
+﻿using Dominio.Model;
+
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Dapper;
-using Microsoft.Data.SqlClient;
+
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace Servicos
 {
@@ -27,7 +23,7 @@ namespace Servicos
 			{
 				string sql = "INSERT INTO Pessoa (Nome, Email, Etinia,Cpf,DataDeNascimento ) VALUES (@Nome, @Email,@Etinia,@Cpf,@DataDeNacimento ); SELECT CAST(SCOPE_IDENTITY() as int)";
 
-				using (var connection = new SqlConnection(_Configuration.GetConnectionString("DefaultConnection")))
+				using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
 				{
 					connection.Open();
 					var result = await connection.ExecuteAsync(sql, obj);

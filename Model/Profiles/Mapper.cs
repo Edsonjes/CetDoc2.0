@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Dominio.Modelos;
+using Dominio.Model;
 using Dominio.ViewModel;
 
 
