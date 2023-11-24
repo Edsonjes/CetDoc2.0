@@ -5,7 +5,7 @@ using Servicos;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using Dominio.ViewModel;
-using Dominio.Modelos;
+using Dominio.Model;
 
 namespace Infra.Repository
 {

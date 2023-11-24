@@ -7,39 +7,43 @@ using AutoMapper;
 
 namespace CetDocApi
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			
-			var builder = WebApplication.CreateBuilder(args);
-			
-			
-			// Add services to the container.
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
 
-			builder.Services.AddControllers();
-			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen();
-			IServiceCollection ServicePessoaColection = builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
-			builder.Services.AddAutoMapper(typeof(Mapper));
+            var builder = WebApplication.CreateBuilder(args);
 
 
-			var app = builder.Build();
+            // Add services to the container.
 
-			// Configure the HTTP request pipeline.
-			if (app.Environment.IsDevelopment())
-			{
-				app.UseSwagger();
-				app.UseSwaggerUI();
-			}
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            IServiceCollection ServicePessoaColection = builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
+            builder.Services.AddAutoMapper(typeof(Mapper));
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
 
-			app.UseAuthorization();
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseAuthorization();
 
 
-			app.MapControllers();
+            app.MapControllers();
 
-			app.Run();
-		}
-	}
+            app.Run();
+        }
+    }
 }
