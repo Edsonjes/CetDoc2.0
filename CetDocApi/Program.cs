@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Infra.Repository;
-using Dominio.Modelos;
+using Dominio.Model;
 using Dominio.Interfaces;
 using Infra.Repository;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using System.Text;
 
 namespace CetDocApi
 {
@@ -23,11 +25,8 @@ namespace CetDocApi
             builder.Services.AddSwaggerGen();
             IServiceCollection ServicePessoaColection = builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
             builder.Services.AddAutoMapper(typeof(Mapper));
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            });
-
+            builder.Services.AddCors();
+            var key = Encoding.ASCII.GetBytes(_Configuration.GetSection("CriptoRash:Key").Value);
 
             var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using Dominio.Model;
+using Dominio.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Dominio.Interfaces
 {
-    internal interface IAuthentication
+    public interface IAuthentication
     {
-        public Task<string> Login(User obj); 
+        public Task<string> Login(UserViewModel obj); 
     }
 }

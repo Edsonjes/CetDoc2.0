@@ -1,17 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Dominio;
+using Dominio.ViewModel;
+using Dominio.Interfaces;
 
 namespace CetDocsApi.Controllers
 {
     public class AuthenticationController : Controller
     {
+
+        public readonly IAuthentication _authentication;
+
+        public AuthenticationController(IAuthentication authentication)
+        {
+            _authentication = authentication;
+        }
+
       public IActionResult Login()
         {
             return View();
         }
 
        [HttpPost]
-       public async Task<IActionResult> Login( userViwerModel obj)
+       public async Task<IActionResult> Login(UserViewModel obj)
         {
             if (ModelState.IsValid)
             {
@@ -25,6 +34,7 @@ namespace CetDocsApi.Controllers
                 {
                     ModelState.AddModelError("", "Usuario o contraseña incorrectos");
                 }
+
             }
             return View(obj);
         }

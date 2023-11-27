@@ -2,7 +2,7 @@
 using Dominio;
 using FluentValidation;
 using Dominio.Interfaces;
-using Dominio.Modelos;
+using Dominio.Model;
 using Infra.Repository;
 using Dominio.ViewModel;
 

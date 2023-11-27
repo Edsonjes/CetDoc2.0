@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Infra.Repository
 {
-    internal class AuthenticationRepository
+    public class AuthenticationRepository
     {
     }
 }
