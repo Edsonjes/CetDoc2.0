@@ -26,7 +26,7 @@ namespace App
             {
                 endpoite.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Login}/{id?}");
 
                 endpoite.MapControllerRoute(
                     name: "ListarPessoas",

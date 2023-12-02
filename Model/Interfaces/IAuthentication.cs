@@ -1,5 +1,6 @@
 ﻿using Dominio.Model;
 using Dominio.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Dominio.Interfaces
 {
     public interface IAuthentication
     {
-        public Task<string> Login(UserViewModel obj); 
+        public  Task<ActionResult<dynamic>> Login(UserViewModel obj); 
     }
 }

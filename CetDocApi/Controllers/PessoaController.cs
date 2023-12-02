@@ -5,6 +5,7 @@ using Dominio.Interfaces;
 using Dominio.Model;
 using Infra.Repository;
 using Dominio.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CetDocsApi.Controllers
 {
@@ -18,7 +19,7 @@ namespace CetDocsApi.Controllers
 		}
 
 
-
+		[Authorize]
 		[HttpPost]
 		[Route("CadastrarPessoa")]
 		public async Task<IActionResult> CadastrarPessoa(PessoaViewModel pessoa)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dominio.ViewModel
 {
-    public class UserViewModel : PessoaViewModel
+    public class UserViewModel 
     {
      
             public string Login { get; set; }

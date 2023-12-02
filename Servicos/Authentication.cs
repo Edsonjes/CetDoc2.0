@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace Servicos
 {
-    internal class Authentication
+    public class Authentication
     {
         public IConfiguration _Configuration;
 

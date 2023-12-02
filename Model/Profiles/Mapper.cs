@@ -12,6 +12,7 @@ namespace Dominio.Profiles
 			var config = new MapperConfiguration(cfg => {
 							cfg.CreateMap<PessoaViewModel, Pessoa>().ReverseMap();
 				            cfg.CreateMap<User, UserViewModel>().ReverseMap();
+				            
 			});
 
 		}

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Dominio;
 using Dominio.Interfaces;
-using Dominio.Modelos;
+using Dominio.Model;
 
 namespace CetDocs.Test
 {
