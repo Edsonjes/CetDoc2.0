@@ -1,13 +1,11 @@
 using Infra.Repository;
 using Dominio.Interfaces;
 using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using System.Text;
+
 
 namespace CetDocApi
 {
@@ -45,8 +43,8 @@ namespace CetDocApi
 					}
 				});
 			});
-			builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
-			builder.Services.AddTransient<IAuthentication, AuthenticationRepository>();
+			builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
+			builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
 			builder.Services.AddAutoMapper(typeof(Mapper));
 			builder.Services.AddCors();
 
