@@ -21,22 +21,24 @@ namespace CetDocsApi.Controllers
 
 		[HttpPost]
 		[Route("Login")]
-		public async Task<IActionResult> Login(UserViewModel obj)
-		{
-			if (ModelState.IsValid)
-			{
-				var token = await _authentication.Login(obj);
-				if (token != null)
-				{
-					HttpContext.Session.SetString("JWToken", token.ToString());
-					return RedirectToAction("Index", "Home");
-				}
-				else
-				{
-					ModelState.AddModelError("", "Usuário ou senha incorretos");
-				}
-			}
-			return View();
-		}
-	}
+        public async Task<IActionResult> Login(UserViewModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = await _authentication.Login(obj);
+
+                if (token != null)
+                {
+                    
+                    return new JsonResult(new { Token = token });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Usuário ou senha incorretos");
+                }
+            }
+
+            return BadRequest(ModelState);
+        }
+    }
 }

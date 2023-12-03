@@ -47,6 +47,7 @@ namespace CetDocApi
 			builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
 			builder.Services.AddAutoMapper(typeof(Mapper));
 			builder.Services.AddCors();
+			builder.Services.AddMvc();
 
 			var key = Encoding.ASCII.GetBytes(_Configuration.GetSection("CriptoRash:Key").Value);
 
@@ -77,6 +78,7 @@ namespace CetDocApi
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
+			
 
 			app.UseAuthentication();
 			app.UseAuthorization();
