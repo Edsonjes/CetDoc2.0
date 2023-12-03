@@ -7,7 +7,7 @@ namespace CetDocsApi.Controllers
     public class AuthenticationController : Controller
     {
 
-        public readonly IAuthentication _authentication
+		public readonly IAuthentication _authentication;
 
         public AuthenticationController(IAuthentication authentication)
         {
