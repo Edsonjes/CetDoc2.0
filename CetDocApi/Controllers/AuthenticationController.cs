@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dominio.ViewModel;
-using Microsoft.AspNetCore.Http;
-using Infra.Repository;
+using Dominio.Interfaces;
 
 namespace CetDocsApi.Controllers
 {
     public class AuthenticationController : Controller
     {
 
-        public readonly AuthenticationRepository _authentication;
+        public readonly IAuthentication _authentication
 
-        public AuthenticationController(AuthenticationRepository authentication)
+        public AuthenticationController(IAuthentication authentication)
         {
             _authentication = authentication;
         }
