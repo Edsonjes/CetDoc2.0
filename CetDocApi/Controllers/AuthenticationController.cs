@@ -14,11 +14,6 @@ namespace CetDocsApi.Controllers
             _authentication = authentication;
         }
 
-      public IActionResult Login()
-        {
-            return View();
-        }
-
 		[HttpPost]
 		[Route("Login")]
         public async Task<IActionResult> Login(UserViewModel obj)
@@ -29,7 +24,7 @@ namespace CetDocsApi.Controllers
 
                 if (token != null)
                 {
-                    
+
                     return new JsonResult(new { Token = token });
                 }
                 else

@@ -5,14 +5,19 @@ using Dominio.ViewModel;
 
 namespace Dominio.Profiles
 {
-	internal class Mapper : Profile
+	public class Mapper : Profile
 	{
+
 		public Mapper()
 		{
+			ConfigureMappings();
+		}
+
+		private void ConfigureMappings()
+		{
 			var config = new MapperConfiguration(cfg => {
-							cfg.CreateMap<PessoaViewModel, Pessoa>().ReverseMap();
-				            cfg.CreateMap<User, UserViewModel>().ReverseMap();
-				            
+				cfg.CreateMap<PessoaViewModel, Pessoa>().ReverseMap();
+				cfg.CreateMap<User, UserViewModel>().ReverseMap();
 			});
 
 		}

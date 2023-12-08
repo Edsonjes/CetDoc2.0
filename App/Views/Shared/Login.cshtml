@@ -94,17 +94,17 @@ License: You must have a valid license purchased only from themeforest(the above
 							<p class="text-muted font-weight-bold">Entre com seu Login e Senha</p>
 						</div>
 						<!--begin::Form-->
-						<form class="form" novalidate="novalidate" id="kt_login_signin_form">
+						<form class="form" novalidate="novalidate" id="Formlogin">
 							<div class="form-group">
-								<input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="Username" name="username" autocomplete="off" />
+								<input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="Username" id="username" name="username" autocomplete="off" />
 							</div>
 							<div class="form-group">
-								<input class="form-control form-control-solid h-auto py-5 px-6" type="password" placeholder="Password" name="password" autocomplete="off" />
+								<input class="form-control form-control-solid h-auto py-5 px-6" type="password" placeholder="Password" id="password" name="password" autocomplete="off" />
 							</div>
 							<!--begin::Action-->
 							<div class="form-group d-flex flex-wrap justify-content-between align-items-center">
 								<a href="javascript:;" class="text-dark-50 text-hover-primary my-3 mr-2" id="kt_login_forgot">Esqueceu a Senha ?</a>
-								<button type="button" id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3">Entrar</button>
+								<button type="submit" id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3">Entrar</button>
 							</div>
 							<!--end::Action-->
 						</form>
@@ -119,7 +119,7 @@ License: You must have a valid license purchased only from themeforest(the above
 						</div>
 						
 						<!--begin::Form-->
-						<form class="form" novalidate="novalidate" id="kt_login_signup_form">
+					@* 	<form class="form" novalidate="novalidate" id="kt_login_signup_form">
 							<div class="form-group">
 								<input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="Fullname" name="fullname" autocomplete="off" />
 							</div>
@@ -144,7 +144,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<button type="button" id="kt_login_signup_cancel" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4">Cancel</button>
 							</div>
 						</form>
-						<!--end::Form-->
+						<!--end::Form--> *@
 					</div>
 					<!--end::Signup-->
 					<!--begin::Forgot-->
@@ -195,6 +195,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!--end::Global Theme Bundle-->
 	<!--begin::Page Scripts(used by this page)-->
 	<script src="~/assets/js/pages/custom/login/login-general.js"></script>
+	<script src="~/assets/js/Authentication/Login.js"></script>
 	<!--end::Page Scripts-->
 </body>
 <!--end::Body-->

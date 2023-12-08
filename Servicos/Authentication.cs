@@ -24,15 +24,15 @@ namespace Servicos
         {
             try
             {
-                string sql = "SELECT * FROM tb_Usuario WHERE Login = @Login AND Senha = @Password";
+                string sql = "SELECT IdUsuario FROM tb_Usuario WHERE Login = @Login AND Senha = @Password";
                 var key = Encoding.ASCII.GetBytes(_Configuration.GetSection("CriptoRash:Key").Value);
                 var tokenHandler = new JwtSecurityTokenHandler();
                 using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
                 {
                     connection.Open();
-                    var result = await connection.ExecuteAsync(sql, obj);
-                    obj.Id = result;
-                    if (obj.Id == 0)
+                    var result = await connection.QueryAsync<int>(sql, new {obj.Login,obj.Password});
+                   
+                    if (result.Any())
                     {
                         var tokenDescriptor = new SecurityTokenDescriptor
                         {
