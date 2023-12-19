@@ -5,88 +5,102 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-
+using Microsoft.Extensions.Configuration;
+using Servicos;
 
 namespace CetDocApi
 {
-	public class Program
-	{
-		public static void Main(string[] args)
-		{
-			var builder = WebApplication.CreateBuilder(args);
-			IConfiguration _Configuration = builder.Configuration;
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            IConfiguration _Configuration = builder.Configuration;
 
-			// Adiciona serviços ao contêiner.
-			builder.Services.AddControllers();
-			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen(c =>
-			{
-				c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-				{
-					Name = "Authorization",
-					In = ParameterLocation.Header,
-					Type = SecuritySchemeType.ApiKey,
-					Scheme = "Bearer"
-				});
-				c.AddSecurityRequirement(new OpenApiSecurityRequirement
-				{
-					{
-						new OpenApiSecurityScheme
-						{
-							Reference = new OpenApiReference
-							{
-								Id = "Bearer",
-								Type = ReferenceType.SecurityScheme
-							}
-						},
-						new string[]{}
-					}
-				});
-			});
-			builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
-			builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
-			builder.Services.AddAutoMapper(typeof(Mapper));
-			builder.Services.AddCors();
-			builder.Services.AddMvc();
+            // Adiciona serviços ao contêiner.
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+           
+            builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
+            builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
+            builder.Services.AddScoped<PessoaServices>();
+            builder.Services.AddAutoMapper(typeof(Mapper));
+            builder.Services.AddCors();
+            builder.Services.AddMvc();
 
-			var key = Encoding.ASCII.GetBytes(_Configuration.GetSection("CriptoRash:Key").Value);
+            var key = Encoding.ASCII.GetBytes(_Configuration.GetSection("CriptoRash:Key").Value);
+            var serviceURl = _Configuration.GetSection("ServicesUrls:IdentityServer").Value;
 
-			builder.Services.AddAuthentication(x =>
-			{
-				x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-				x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer",options =>
+            {
+                options.Authority = serviceURl;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
 
-			}).AddJwtBearer(x =>
-			{
-				x.RequireHttpsMetadata = false;
-				x.SaveToken = true;
-				x.TokenValidationParameters = new TokenValidationParameters
-				{
-					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(key),
-					ValidateIssuer = false,
-					ValidateAudience = false,
-					ClockSkew = TimeSpan.Zero
-				};
-			});
+                };
+            });
+            builder.Services.AddAuthorization(options =>
+            {
 
-			var app = builder.Build();
+                options.AddPolicy("ApiScope", policy =>
+                {
 
-			// Configure o pipeline de solicitação HTTP.
-			if (app.Environment.IsDevelopment())
-			{
-				app.UseSwagger();
-				app.UseSwaggerUI();
-			}
-			
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "CetDocsApp");
+                });
 
-			app.UseAuthentication();
-			app.UseAuthorization();
-			app.UseCors(app => app.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-			app.MapControllers();
+            });
 
-			app.Run();
-		}
-	}
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CetDocApi", Version = "v1" });
+                c.EnableAnnotations();
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"Enter 'Bearer' [space] and your token!",
+                    Name = "Autorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference=new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            },
+                             Scheme = "oauth2",
+                            Name = "Bearer",
+                           In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                    }
+                });
+            });
+
+            var app = builder.Build();
+
+            // Configure o pipeline de solicitação HTTP.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseCors(app => app.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            app.MapControllers();
+
+            app.Run();
+        }
+    }
 }

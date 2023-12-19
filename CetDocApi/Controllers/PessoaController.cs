@@ -19,14 +19,25 @@ namespace CetDocsApi.Controllers
 		}
 
 
-		[Authorize]
+		
 		[HttpPost]
+		[Authorize]
 		[Route("CadastrarPessoa")]
 		public async Task<IActionResult> CadastrarPessoa(PessoaViewModel pessoa)
 		{
 			var cadPessoa = await _pessoaRepository.Cadastrar(pessoa);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("ListarPessoas")]
+		public async Task<IActionResult> ListarPessoas()
+		{
+            List<PessoaViewModel> lista = new List<PessoaViewModel>();
+            lista = await _pessoaRepository.Listar();
+            return (IActionResult)lista;
+        }
 
 	}
 

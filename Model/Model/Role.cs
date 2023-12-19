@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Dominio.Model
 {
-    public class Role
+    public static class Role
     {
-        public int Id { get; set; }
-        public int Name { get; set; }
+        public const string Admin = "Admin";
+        public const string Client = "Client";
     }
 }

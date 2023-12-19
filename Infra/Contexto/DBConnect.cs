@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 namespace Infra.Contexto
 {
-	internal class ConnectionsDB
+	internal class DBConnect
 	{
 		public IConfiguration _Configuration;
 
-		public ConnectionsDB(IConfiguration Configuration)
+		public DBConnect(IConfiguration Configuration)
 		{
 			_Configuration = Configuration;
 		}

@@ -12,7 +12,8 @@ var KTAppsUsersListDatatable = function () {
 				type: 'remote',
 				source: {
 					read: {
-						url: HOST_URL + '/api/datatables/demos/default.php',
+						/*url: HOST_URL + '/api/datatables/demos/default.php'*/
+						url: HOST_URL + 'Pessoas/ListarPessoa',
 					},
 				},
 				pageSize: 10, // display 20 records per page

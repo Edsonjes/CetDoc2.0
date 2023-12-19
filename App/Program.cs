@@ -1,9 +1,8 @@
 using Dominio.Interfaces;
 using Infra.Repository;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using AutoMapper;
+using Servicos;
 
 namespace App
 {
@@ -12,35 +11,45 @@ namespace App
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
-
-			// Add services to the container.
-			builder.Services.AddControllersWithViews();
+           
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
 			builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
+			builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
+            builder.Services.AddScoped<PessoaServices>();
 
-			// Build the configuration
-			var configuration = builder.Configuration;
+            // Build the configuration
+            var configuration = builder.Configuration;
 
 			// Retrieve the key from the configuration
-			var key = Encoding.ASCII.GetBytes(configuration.GetSection("CriptoRash:Key").Value);
+			////var key = Encoding.ASCII.GetBytes(configuration.GetSection("CriptoRash:Key").Value);
+			var serviceURl = configuration.GetSection("ServicesUrls:IdentityServer").Value;
 
 			builder.Services.AddAuthentication(x =>
 			{
-				x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-				x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+				x.DefaultScheme = "Cookies";
+				x.DefaultChallengeScheme = "oidc";
 
-			}).AddJwtBearer(x =>
+			}).AddCookie("Cookies", x => x.ExpireTimeSpan = System.TimeSpan.FromMinutes(60))
+			.AddOpenIdConnect("oidc", options =>
 			{
-				x.RequireHttpsMetadata = false;
-				x.SaveToken = true;
-				x.TokenValidationParameters = new TokenValidationParameters
-				{
-					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(key),
-					ValidateIssuer = false,
-					ValidateAudience = false,
-					ClockSkew = TimeSpan.Zero
-				};
-			});
+				options.Authority = serviceURl;
+                options.GetClaimsFromUserInfoEndpoint = true;
+				options.ClientId = "CetDocsApp";
+				options.ClientSecret = "CriptoRash";
+				options.ResponseType = "code";
+				options.ClaimActions.MapJsonKey("role", "role", "role");
+                options.ClaimActions.MapJsonKey("sub", "sub", "sub");
+				options.TokenValidationParameters.NameClaimType = "name";
+				options.TokenValidationParameters.RoleClaimType = "role";
+				options.UsePkce = true;
+				options.Scope.Add("CetDocsApp");
+				options.SaveTokens = true;
+
+            });
+
+			builder.Services.AddAutoMapper(typeof(Mapper));
+			
 
 			var app = builder.Build();
 
@@ -49,38 +58,48 @@ namespace App
 			{
 				app.UseExceptionHandler("/Home/Error");
 			}
-			app.UseStaticFiles();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-			app.UseRouting();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+		
 
-			app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+				
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Login}/{id?}");
 
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Login}/{id?}");
+          
+                endpoints.MapControllerRoute(
+                    name: "ListarPessoas",
+                    pattern: "/Pessoas",
+                    defaults: new { controller = "Pessoas", action = "PessoasIndex" });
 
-				endpoints.MapControllerRoute(
-				name: "Index",
-				pattern: "Home/Index",
-				defaults: new { controller = "Home", action = "Index" }
-																									);
+                endpoints.MapControllerRoute(
+                    name: "CadastrarPessoa",
+                    pattern: "/Pessoas/Cadastrar",
+                    defaults: new { controller = "Pessoas", action = "CadastrarPessoa" });
+            });
+            
+            app.Use(async (context, next) =>
+            {
+				if (!context.User.Identity.IsAuthenticated)
+				{
+					context.Response.Redirect("https://localhost:4435/Account/Login");
+				}
+				else
+				{
+                    await next();
+                }
+                //context.Response.Redirect("/Home/Index");
+                
+            });
 
-				endpoints.MapControllerRoute(
-					name: "ListarPessoas",
-					pattern: "/Pessoas",
-					defaults: new { controller = "Pessoas", action = "PessoasIndex" }
-					);
-
-				endpoints.MapControllerRoute(
-					name: "CadastrarPessoa",
-					pattern: "/Pessoas/Cadastrar",
-					defaults: new { controller = "Pessoas", action = "CadastrarPessoa" }
-					);
-			});
-
-			app.Run();
+            app.Run();
 		}
 	}
 }

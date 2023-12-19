@@ -12,30 +12,30 @@ namespace Infra.Repository
 	public class PessoaRepository : IPessoaRepository
 	{
 		public IConfiguration _Configuration;
-	 	public PessoaRepository(IConfiguration Configuration)
+        public readonly PessoaServices _PessoaServices;
+        public Mapper _Mapper;
+        public PessoaRepository(IConfiguration Configuration, PessoaServices PessoaServices)
 		{
 			_Configuration = Configuration;
-		}
-		public readonly PessoaServices PessoaServices;
-		public readonly Mapper _Mapper;
+            _PessoaServices = PessoaServices;
 
-		public PessoaRepository(PessoaServices pessoaServices, Mapper mapper)
-		{
-			PessoaServices = pessoaServices;
-			_Mapper = mapper;
-		}
-
-		public async Task<PessoaViewModel> Cadastrar(PessoaViewModel obj) 
+            _Mapper = new Mapper(new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<PessoaViewModel, Pessoa>().ReverseMap();
+            }));
+        }
+		
+		public async Task<PessoaViewModel> Cadastrar(PessoaViewModel obj)
 		{
 			try
 			{
 
 				if (obj != null)
 				{
-					var mapObj= _Mapper.Map<Pessoa>(obj);
-					var PessoaCadastro = PessoaServices.Cadastrar(mapObj);
+					var mapObj = _Mapper.Map<Pessoa>(obj);
+					var PessoaCadastro =  _PessoaServices.Cadastrar(mapObj);
 				}
-				
+
 				return obj;
 
 			}
@@ -44,8 +44,37 @@ namespace Infra.Repository
 				throw ex.InnerException;
 			}
 		}
-	
-		public Task<PessoaViewModel> Atualizar(PessoaViewModel obj)
+
+        public async Task<List<PessoaViewModel>> Listar()
+        {
+			try
+			{
+               
+                var mapObj = await _PessoaServices.Listar();
+
+                
+                if (mapObj == null)
+                {
+                    throw new Exception("Lista de pessoas retornou nula");
+                }
+
+                var retorno = _Mapper.Map<List<PessoaViewModel>>(mapObj);
+
+                if (retorno == null)
+                {
+                    throw new Exception("Erro ao mapear lista de pessoas para ViewModel");
+                }
+
+                return retorno;
+
+            }
+			catch(Exception ex)
+			{
+				throw ex.InnerException;
+			}
+        }
+
+        public Task<PessoaViewModel> Atualizar(PessoaViewModel obj)
 		{
 			throw new NotImplementedException();
 		}
@@ -60,9 +89,6 @@ namespace Infra.Repository
 			throw new NotImplementedException();
 		}
 
-		public Task<List<PessoaViewModel>> Listar()
-		{
-			throw new NotImplementedException();
-		}
+		
 	}
 }

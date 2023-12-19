@@ -56,22 +56,24 @@ namespace Servicos
 			throw new NotImplementedException();
 		}
 
-		public async Task<List<Pessoa>> Listar()
-		{
-			try
-			{
+        public async Task<List<Pessoa>> Listar()
+        {
+            try
+            {
+                IEnumerable<Pessoa> listaRetorno;
+                string sql = "SELECT * FROM tb_Pessoa";
 
-				string sql = "SELECT * FROM Pessoa";
-
-				using (var connection = new SqlConnection(_Configuration.GetConnectionString("DefaultConnection")))
-				{
-					connection.Open();
-					var result = await connection.QueryAsync<Pessoa>(sql);
-					return result.ToList();
-				}
-			}
-			catch (Exception ex)
-			{ throw ex.InnerException; }
-		}
-	}
+                using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
+                {
+                    connection.Open(); ;
+                    listaRetorno = await connection.QueryAsync<Pessoa>(sql);
+                    return listaRetorno.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+    }
 }
