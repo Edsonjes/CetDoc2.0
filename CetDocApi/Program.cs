@@ -25,8 +25,14 @@ namespace CetDocApi
             builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
             builder.Services.AddScoped<PessoaServices>();
             builder.Services.AddAutoMapper(typeof(Mapper));
-            builder.Services.AddCors();
-            builder.Services.AddMvc();
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy("CorsPolicy", builder => builder
+				.AllowAnyOrigin()
+				.AllowAnyMethod()
+				.AllowAnyHeader());
+			});
+			builder.Services.AddMvc();
 
             var key = Encoding.ASCII.GetBytes(_Configuration.GetSection("CriptoRash:Key").Value);
             var serviceURl = _Configuration.GetSection("ServicesUrls:IdentityServer").Value;
@@ -96,9 +102,8 @@ namespace CetDocApi
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors(app => app.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
             app.MapControllers();
+            app.UseCors("CorsPolicy");
 
             app.Run();
         }

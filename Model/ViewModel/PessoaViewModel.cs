@@ -8,7 +8,7 @@ namespace Dominio.ViewModel
 {
 	public class PessoaViewModel
 	{
-		public int Id { get; set; }
+		public int IdPessoa { get; set; }
 		public string Nome { get; set; }
 		public string Email { get; set; }
 		public string Telefone { get; set; }

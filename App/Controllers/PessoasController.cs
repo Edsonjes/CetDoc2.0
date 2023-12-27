@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Dominio.Interfaces;
 using Dominio.ViewModel;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace App.Controllers
 {
@@ -24,13 +26,15 @@ namespace App.Controllers
             return View();
         }
 
+		
 		[Authorize]
 		[HttpGet]
-		public async Task<IActionResult> ListarPessoas()
+		public async Task<JsonResult> ListarPessoas()
 		{
-            List<PessoaViewModel> lista = new List<PessoaViewModel>();
-			lista = await _pessoaRepository.Listar();
-			return (IActionResult)lista;
-        }
+
+			List<PessoaViewModel> jsonResult = await _pessoaRepository.Listar();
+			return new JsonResult(jsonResult);
+
+		}
 	}
 }

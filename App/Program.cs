@@ -17,9 +17,16 @@ namespace App
 			builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
 			builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
             builder.Services.AddScoped<PessoaServices>();
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy("CorsPolicy", builder => builder
+				.AllowAnyOrigin()
+				.AllowAnyMethod()
+				.AllowAnyHeader());
+			});
 
-            // Build the configuration
-            var configuration = builder.Configuration;
+			// Build the configuration
+			var configuration = builder.Configuration;
 
 			// Retrieve the key from the configuration
 			////var key = Encoding.ASCII.GetBytes(configuration.GetSection("CriptoRash:Key").Value);
@@ -64,6 +71,7 @@ namespace App
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+			app.UseCors("CorsPolicy");
 		
 
             app.UseEndpoints(endpoints =>

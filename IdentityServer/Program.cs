@@ -15,6 +15,13 @@ var connection = builder.Configuration["ConnectionStrings:dbConnection"];
 builder.Services.AddDbContext<DBConections>(options =>
     options.UseSqlServer(connection, sqlServerOptions =>
         sqlServerOptions.MigrationsAssembly(typeof(DBConections).Assembly.FullName)));
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("CorsPolicy", builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+});
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DBConections>()
@@ -51,6 +58,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseIdentityServer();
+app.UseCors("CorsPolicy");
 app.Use(async (context, next) =>
 {
     context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; connect-src 'self' wss://localhost:44355;");

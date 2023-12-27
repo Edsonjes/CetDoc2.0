@@ -27,8 +27,8 @@ namespace Servicos
 				{
 					connection.Open();
 					var result = await connection.ExecuteAsync(sql, obj);
-					obj.Id = result;
-					if (obj.Id == 0)
+					obj.IdPessoa = result;
+					if (obj.IdPessoa == 0)
 					{
 						throw new Exception("Erro ao cadastrar pessoa");
 					}
