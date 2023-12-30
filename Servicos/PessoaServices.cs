@@ -21,7 +21,7 @@ namespace Servicos
 		{
 			try
 			{
-				string sql = "INSERT INTO Pessoa (Nome, Email, Etinia,Cpf,DataDeNascimento ) VALUES (@Nome, @Email,@Etinia,@Cpf,@DataDeNacimento ); SELECT CAST(SCOPE_IDENTITY() as int)";
+				string sql = "INSERT INTO Pessoa (Nome, Email, Cpf,DataDeNacimento ) VALUES (@Nome, @Email,@Etinia,@Cpf,@DataDeNacimento ); SELECT CAST(SCOPE_IDENTITY() as int)";
 
 				using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
 				{

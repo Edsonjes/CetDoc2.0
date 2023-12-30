@@ -14,8 +14,9 @@ namespace Dominio.Model
         public string Telefone { get; set; }
         public string Cpf{ get; set; }
         public string Etinia { get; set; }
-        public string Sexo { get; set; }
+        public string Deficiente { get; set; }
         public string DataNascimento { get; set; }
+        public EnderecoPessoa Endereco { get; set; }
 
     }
 }
