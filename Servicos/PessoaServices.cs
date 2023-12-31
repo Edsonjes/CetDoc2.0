@@ -33,7 +33,6 @@ namespace Servicos
 						throw new Exception("Erro ao cadastrar pessoa");
 					}
 				}
-			
 			}
 			catch (Exception ex)
 			{
@@ -65,7 +64,7 @@ namespace Servicos
 
                 using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
                 {
-                    connection.Open(); ;
+                    connection.Open();
                     listaRetorno = await connection.QueryAsync<Pessoa>(sql);
                     return listaRetorno.ToList();
                 }
