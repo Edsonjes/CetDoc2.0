@@ -21,7 +21,7 @@ namespace Servicos
 		{
 			try
 			{
-				string sql = "INSERT INTO Pessoa (Nome, Email, Cpf,DataDeNacimento ) VALUES (@Nome, @Email,@Etinia,@Cpf,@DataDeNacimento ); SELECT CAST(SCOPE_IDENTITY() as int)";
+				string sql = "INSERT INTO tbl_Pessoa (Nome, Email, Cpf,DataDeNacimento ) VALUES (@Nome, @Email,@Etinia,@Cpf,@DataDeNacimento ); SELECT CAST(SCOPE_IDENTITY() as int)";
 
 				using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
 				{
@@ -60,7 +60,7 @@ namespace Servicos
             try
             {
                 IEnumerable<Pessoa> listaRetorno;
-                string sql = "SELECT * FROM tb_Pessoa";
+                string sql = "SELECT * FROM tbl_Pessoa";
 
                 using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
                 {
