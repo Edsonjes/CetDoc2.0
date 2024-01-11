@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CetDocsApi.Controllers
 {
+	[ApiController]
+	[Route("api/[controller]")]
 	public class PessoaController : Controller
 	{
 		public readonly IPessoaRepository _pessoaRepository;
@@ -18,8 +20,6 @@ namespace CetDocsApi.Controllers
 			_pessoaRepository = pessoaRepository;
 		}
 
-
-		
 		[HttpPost]
 		[Authorize]
 		[Route("CadastrarPessoa")]

@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Servicos;
+using Dominio.Profiles;
 
 namespace CetDocApi
 {
@@ -14,16 +15,24 @@ namespace CetDocApi
     {
         public static void Main(string[] args)
         {
+            IMapper Mapper = MapperConfig.RegisterMap().CreateMapper();
+
             var builder = WebApplication.CreateBuilder(args);
             IConfiguration _Configuration = builder.Configuration;
+            
+            //addOsMapper 
+            builder.Services.AddSingleton(Mapper);
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Adiciona serviços ao contêiner.
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
            
-            builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
-            builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
-            builder.Services.AddScoped<PessoaServices>();
+            //builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
+            //builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
+            //builder.Services.AddScoped<PessoaServices>();
+            
+            
             builder.Services.AddAutoMapper(typeof(Mapper));
 			builder.Services.AddCors(options =>
 			{

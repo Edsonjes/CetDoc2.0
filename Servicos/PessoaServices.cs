@@ -21,20 +21,20 @@ namespace Servicos
 		{
 			try
 			{
-				string sql = "INSERT INTO Pessoa (Nome, Email, Etinia,Cpf,DataDeNascimento ) VALUES (@Nome, @Email,@Etinia,@Cpf,@DataDeNacimento ); SELECT CAST(SCOPE_IDENTITY() as int)";
+				string sql = "INSERT INTO Pessoa (Nome,Email,Etinia,Cpf,DataDeNascimento ) VALUES (@Nome, @Email, @Etinia, @Cpf, @DataDeNacimento ); SELECT CAST(SCOPE_IDENTITY() as int)";
 
 				using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
 				{
 					connection.Open();
 					var result = await connection.ExecuteAsync(sql, obj);
 					obj.IdPessoa = result;
-					if (obj.IdPessoa == 0)
+					if (obj.IdPessoa == 0) 
 					{
 						throw new Exception("Erro ao cadastrar pessoa");
 					}
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				throw new Exception("Erro ao cadastrar pessoa");
 			}
