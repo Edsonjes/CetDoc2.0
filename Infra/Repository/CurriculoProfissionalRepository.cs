@@ -1,32 +1,35 @@
 ﻿using AutoMapper;
 using Dominio.Interfaces;
 using Dominio.ViewModel;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using Servicos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infra.Repository
 {
-	internal class CurriculoProfissionalRepository : ICurriculoProssional
+	public  class CurriculoProfissionalRepository : ICurriculoProssional
 	{
 	    private  IMapper _map;
 		private readonly CurriculoProfissionalService _service;
-		public CurriculoProfissionalRepository(IMapper map, CurriculoProfissionalService service)
+        public IConfiguration _Configuration;
+
+        public CurriculoProfissionalRepository(IMapper map, CurriculoProfissionalService service, IConfiguration configuration)
         {
             _map = map;
 			_service = service;
+			_Configuration = configuration;
         }
-        public List<CurriculoProfissionalViewModel> listarQuestoes()
+        
+        public async Task<List<CurriculoProfissionalViewModel>> ListarQuestoes()
 		{
 			try
 			{
 				List<CurriculoProfissionalViewModel> Retorno;
-				Retorno = _map.Map<List<CurriculoProfissionalViewModel>>(_service.ListarQuestoes);
-				return Retorno;
-			}catch(Exception ex)
+                Retorno = _map.Map<List<CurriculoProfissionalViewModel>>(await _service.ListarQuestoes());
+                return Retorno;
+			}
+			catch(Exception )
 			{
 				throw new Exception("Erro ao listar CurriculoProfissional");
 			}

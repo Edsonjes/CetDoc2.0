@@ -65,7 +65,7 @@ namespace Servicos
 			}
 		}
 
-		public async Task<CurriculoProfissionalModel> ListarQuestoes()
+		public async Task<IEnumerable<CurriculoProfissionalModel>> ListarQuestoes()
 		{
 			try
 			{
@@ -74,9 +74,11 @@ namespace Servicos
 				using (var connection = new SqlConnection(_Configuration.GetConnectionString("dbConnection")))
 				{
 					connection.Open();
+					
 					listaRetorno = await connection.QueryAsync<CurriculoProfissionalModel>(sql);
+					
 				}
-				return listaRetorno.FirstOrDefault();
+				return listaRetorno;
 			}
 			catch(Exception ex)
 			{
