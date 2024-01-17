@@ -3,6 +3,9 @@ using Infra.Repository;
 using Microsoft.AspNetCore.Authentication;
 using AutoMapper;
 using Servicos;
+using System.Data;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace App
 {
@@ -14,9 +17,11 @@ namespace App
            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-			builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
-			builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
+		    builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
             builder.Services.AddScoped<PessoaServices>();
+
+			builder.Services.AddScoped<IDbConnection>(_ => new SqlConnection(builder.Configuration.GetConnectionString("dbConnection")));
+
 			builder.Services.AddCors(options =>
 			{
 				options.AddPolicy("CorsPolicy", builder => builder
@@ -25,8 +30,10 @@ namespace App
 				.AllowAnyHeader());
 			});
 
-			// Build the configuration
-			var configuration = builder.Configuration;
+            builder.Services.AddHttpClient();
+
+            // Build the configuration
+            var configuration = builder.Configuration;
 
 			// Retrieve the key from the configuration
 			////var key = Encoding.ASCII.GetBytes(configuration.GetSection("CriptoRash:Key").Value);

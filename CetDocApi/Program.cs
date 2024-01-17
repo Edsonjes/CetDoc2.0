@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Servicos;
 using Dominio.Profiles;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace CetDocApi
 {
@@ -25,12 +26,13 @@ namespace CetDocApi
             builder.Services.AddSingleton(Mapper);
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            builder.Services.AddScoped<IDbConnection>(_ => new SqlConnection(builder.Configuration.GetConnectionString("dbConnection")));
+
             // Adiciona serviços ao contêiner.
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddScoped<IPessoaRepository, PessoaRepository>();
-            builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
             builder.Services.AddScoped<ICurriculoProssional, CurriculoProfissionalRepository>();
             builder.Services.AddScoped<PessoaServices>();
             builder.Services.AddScoped<CurriculoProfissionalService>();

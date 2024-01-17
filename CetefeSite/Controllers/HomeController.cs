@@ -24,6 +24,7 @@ namespace CetefeSite.Controllers
             return View();
         }
         [HttpGet]
+        [Route("Home/ListaQuestoes")]
         public async Task<IActionResult> ListaQuestoes()
         {
             try
@@ -31,9 +32,12 @@ namespace CetefeSite.Controllers
                 var response = await _httpClient.GetAsync(BaseUrl + "/api/CurriculoProfissional/ListarQuestoes");
                 Console.WriteLine(response);
 
+                 
+
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResult = await response.ReadContentAsync<List<CurriculoProfissionalViewModel>>();
+                    ViewBag.ListaQuestoes = jsonResult;
                     return new JsonResult(jsonResult);
                 }
                 else
