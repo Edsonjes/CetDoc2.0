@@ -9,6 +9,7 @@ namespace Dominio.Interfaces
 {
 	public interface ICurriculoProssional
 	{
-		public  Task<List<CurriculoProfissionalViewModel>> ListarQuestoes();
+		public  Task<List<QuestoesViewModel>> ListarQuestoes();
+		public Task<CurriculoProfissionalViewModel> SalvarFormulario(CurriculoProfissionalViewModel obj);
 	}
 }

@@ -22,7 +22,7 @@ namespace CetDocsApi.Controllers
         {
             try
             {
-                List<CurriculoProfissionalViewModel> lista;
+                List<QuestoesViewModel> lista;
                 lista = await _curriculoProfissional.ListarQuestoes();
                 return new JsonResult (lista);
             }
@@ -32,6 +32,21 @@ namespace CetDocsApi.Controllers
                 throw;
             }
             
+        }
+        [HttpPost]
+        [Route("SalvarFormulario")]
+        public async Task<IActionResult> SalvarFormulario( CurriculoProfissionalViewModel obj)
+        {
+            try
+            {
+                await _curriculoProfissional.SalvarFormulario(obj);
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

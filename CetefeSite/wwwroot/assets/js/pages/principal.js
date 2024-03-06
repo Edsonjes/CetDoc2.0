@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    var totalpontos = 0;
     function limpa_formulario_cep() {
         // Limpa valores do formulário de cep.
         $("#rua").val("");
@@ -68,8 +68,9 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 var somarPonto = 0;
-
-                ['Idade', 'Sexo', 'Escolaridade', 'Raca','EstadoCivil'].forEach(function (nome) {
+               
+                ['Idade', 'Sexo', 'Escolaridade', 'Raca', 'EstadoCivil', 'Moradia', 'Filhos', 'Trabalho', 'DeficienciaVisual', 'DeficienciaAuditiva', 'opcoesDeTrabalho', 'DeficienciaAuditiva', 'DeficienciaFisica', 'DeficienciaIntelectual', 'Autimos',
+                        'passeLivre'].forEach(function (nome) {
                     var opcoesSelecionadas = document.querySelectorAll('input[name="' + nome + '"]:checked');
 
                     opcoesSelecionadas.forEach(function (opcao) {
@@ -80,6 +81,7 @@ $(document).ready(function () {
 
                         if (questaoEncontrada) {
                             somarPonto += parseInt(questaoEncontrada.pontuacao); // Converter para número antes de somar
+                            totalpontos = somarPonto;
                         }
                     });
                 });
@@ -96,11 +98,61 @@ $(document).ready(function () {
     document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(function (input) {
         input.addEventListener('click', somaPontos);
     });
+
     function SalvarForm() {
+        console.log("Clicou");
+
+        // Serializa os dados do formulário em um objeto
+        var formData = $("#formCadPessoal").serializeArray().reduce(function (obj, item) {
+            // Verifica se o input é do tipo "text"
+            if (item.type === "text") {
+                obj[item.name] = {
+                    value: item.value,
+                };
+            }
+            return obj;
+        }, {});
+
+        // Agora, vamos lidar com os inputs do tipo "radio" e "checkbox"
+        var radioCheckboxData = {};
+
+        $("input[type='radio'], input[type='checkbox']").each(function () {
+            var opcao = this;
+            var opcaoName = opcao.name;
+            var idQuestaoSelecionada = parseInt(opcao.id); // Supondo que o id do input seja o idQuestao
+
+            if (!radioCheckboxData[opcaoName]) {
+                radioCheckboxData[opcaoName] = [];
+            }
+
+            if (opcao.checked) {
+                radioCheckboxData[opcaoName].push({
+                    value: opcao.value,
+                    id: idQuestaoSelecionada
+                });
+            }
+        });
+
+        // Mesclar os objetos formData e radioCheckboxData
+        Object.assign(formData, radioCheckboxData);
+
+        // Adiciona a pontuação ao objeto
+        formData.pontuacao = totalpontos;
+
+        console.log(formData);
 
         $.ajax({
-
-            
-        })
+            url: 'http://localhost:5159/Home/SalvarFormulario',
+            type: 'POST',
+            contentType: 'application/json', // Define o tipo de conteúdo como JSON
+            data: JSON.stringify(formData), // Converte o objeto em uma string JSON
+            success: function (response) {
+                console.log("Sucesso", response);
+            },
+            error: function (error) {
+                console.log("Erro", error);
+            }
+        });
     }
+    document.getElementById('btnSalvar').addEventListener('click', SalvarForm);
 });

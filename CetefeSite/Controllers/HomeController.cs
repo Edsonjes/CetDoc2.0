@@ -36,7 +36,34 @@ namespace CetefeSite.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var jsonResult = await response.ReadContentAsync<List<CurriculoProfissionalViewModel>>();
+                    var jsonResult = await response.ReadContentAsync<List<QuestoesViewModel>>();
+                    ViewBag.ListaQuestoes = jsonResult;
+                    return new JsonResult(jsonResult);
+                }
+                else
+                {
+
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [HttpPost]
+        [Route("Home/SalvarFormulario")]
+        public async Task<IActionResult> SalvarFormulario([FromBody] CurriculoProfissionalViewModel obj)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(BaseUrl + "/api/CurriculoProfissional/SalvarFormulario", obj);
+                Console.WriteLine(response);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResult = await response.ReadContentAsync<CurriculoProfissionalViewModel>();
                     ViewBag.ListaQuestoes = jsonResult;
                     return new JsonResult(jsonResult);
                 }

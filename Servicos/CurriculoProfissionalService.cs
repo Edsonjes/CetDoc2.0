@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Dominio.Model;
+using Dominio.ViewModel;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -29,8 +30,8 @@ namespace Servicos
                 string sql = "INSERT INTO CurriculoProfissional (IdPessoa, IdCurriculo, IdProfissional) VALUES (@IdPessoa, @IdCurriculo, @IdProfissional); SELECT CAST(SCOPE_IDENTITY() as int)";
 
                 var result = await _dbConnection.ExecuteAsync(sql, obj);
-                obj.IdQuestao = result;
-                if (obj.IdQuestao == 0)
+                obj.Questoes.IdQuestao = result;
+                if (obj.Questoes.IdQuestao == 0)
                 {
                     throw new Exception("Erro ao cadastrar CurriculoProfissional");
                 }
@@ -65,14 +66,14 @@ namespace Servicos
             }
         }
 
-        public async Task<IEnumerable<CurriculoProfissionalModel>> ListarQuestoes()
+        public async Task<IEnumerable<QuestoesViewModel>> ListarQuestoes()
         {
             try
             {
-                IEnumerable<CurriculoProfissionalModel> listaRetorno;
+                IEnumerable<QuestoesViewModel> listaRetorno;
                 string sql = "SELECT * FROM tbl_SubTipoQuestoes";
 
-                listaRetorno = await _dbConnection.QueryAsync<CurriculoProfissionalModel>(sql);
+                listaRetorno = await _dbConnection.QueryAsync<QuestoesViewModel>(sql);
 
                 return listaRetorno;
             }

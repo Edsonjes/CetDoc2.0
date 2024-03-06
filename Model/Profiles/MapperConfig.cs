@@ -13,6 +13,7 @@ namespace Dominio.Profiles
 			{
 				cfg.CreateMap<CurriculoProfissionalModel, CurriculoProfissionalViewModel>().ReverseMap();
 				cfg.CreateMap<Pessoa, PessoaViewModel>().ReverseMap();
+				cfg.CreateMap<QuestoesModel, QuestoesViewModel>().ReverseMap();
 			});
 			return config;
 		}

@@ -1,0 +1,63 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "CetDocs.Site",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-web",
+            "program": "${workspaceFolder}/CetefeSite/bin/Debug/net8.0/CetefeSite.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/CetefeSite",
+            "stopAtEntry": false,
+            "applicationUrl": "http://localhost:5159/",
+            "serverReadyAction": {
+                "action": "openExternally",
+                //"pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "pattern": "HTTP.*\\s(\\d{4})"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                //"/Views": "http://localhost:5000/views"
+                  "/CetDocs.Site": "http://localhost:5159"
+            }
+           
+        },
+        {
+            "name": "CetDocs.API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-api",
+            "program": "${workspaceFolder}/CetDocApi/bin/Debug/net8.0/CetDocsApi.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/CetDocApi",
+            "stopAtEntry": false,
+            "applicationUrl": "https://localhost:4440/",
+            "serverReadyAction": {
+                "action": "openExternally",
+                //"pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "pattern": "HTTP.*\\s(\\d{4})"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                //"/GestorProjetos.API": "http://localhost:8080/api"
+
+                  "/CetDocs.API": "https://localhost:4440;http://localhost:4441"
+            },
+          
+        }
+    ],
+    "compounds": [
+        {
+            "name": "CetDocs",
+            "configurations": [
+                "CetDocs.API",
+                "CetDocs.Site"
+            ]
+        }
+    ],
+}
