@@ -21,9 +21,8 @@
             },
             "sourceFileMap": {
                 //"/Views": "http://localhost:5000/views"
-                  "/CetDocs.Site": "http://localhost:5159"
+            "/CetDocs.Site": "http://localhost:5159"
             }
-           
         },
         {
             "name": "CetDocs.API",
@@ -34,7 +33,7 @@
             "args": [],
             "cwd": "${workspaceFolder}/CetDocApi",
             "stopAtEntry": false,
-            "applicationUrl": "https://localhost:4440/",
+            "applicationUrl": "http://localhost:4441",
             "serverReadyAction": {
                 "action": "openExternally",
                 //"pattern": "\\bNow listening on:\\s+(https?://\\S+)",
@@ -44,11 +43,8 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                //"/GestorProjetos.API": "http://localhost:8080/api"
-
-                  "/CetDocs.API": "https://localhost:4440;http://localhost:4441"
+            "/CetDocs.API": "http://localhost:4441/swagger/index.html"
             },
-          
         }
     ],
     "compounds": [

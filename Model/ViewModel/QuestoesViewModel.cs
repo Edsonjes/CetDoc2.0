@@ -10,6 +10,7 @@ namespace Dominio.ViewModel
     {
         public int IdQuestao { get; set; }
         public string Nome { get; set; }
+        public string Value { get; set; }
         public string Resposta { get; set; }
         public string Pontuacao { get; set; }
         public int IdSubTipos { get; set; }

@@ -1,6 +1,9 @@
 using CetDocsApp.Utils;
 using Dominio.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+
 
 
 
@@ -54,28 +57,19 @@ namespace CetefeSite.Controllers
         }
         [HttpPost]
         [Route("Home/SalvarFormulario")]
-        public async Task<IActionResult> SalvarFormulario([FromBody] CurriculoProfissionalViewModel obj)
+        public async Task<JsonResult> SalvarFormulario( CurriculoProfissionalViewModel cv)
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync(BaseUrl + "/api/CurriculoProfissional/SalvarFormulario", obj);
+             
+                var response = await _httpClient.PostAsJsonAsync(BaseUrl + "/api/CurriculoProfissional/SalvarFormulario", cv);
                 Console.WriteLine(response);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var jsonResult = await response.ReadContentAsync<CurriculoProfissionalViewModel>();
-                    ViewBag.ListaQuestoes = jsonResult;
-                    return new JsonResult(jsonResult);
-                }
-                else
-                {
-
-                    return BadRequest();
-                }
+                return new JsonResult("Formulário salvo com sucesso!");
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+               return new JsonResult(ex.Message);
             }
 
         }

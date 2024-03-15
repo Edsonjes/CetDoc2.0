@@ -38,14 +38,14 @@ namespace Infra.Repository
 
         }
 
-        public async Task<CurriculoProfissionalViewModel> SalvarFormulario(CurriculoProfissionalViewModel obj)
+        public async Task<CurriculoProfissionalViewModel> SalvarFormulario(CurriculoProfissionalViewModel cv)
         {
             try
             {
                 CurriculoProfissionalViewModel Retorno = new CurriculoProfissionalViewModel();
-                if (obj != null)
+                if (cv != null)
                 {
-                    var result = _map.Map<CurriculoProfissionalModel>(obj);
+                    var result = _map.Map<CurriculoProfissionalModel>(cv);
                     var CurriculoProfissionalCadastro =  _service.Cadastrar(result);
                    return Retorno = _map.Map<CurriculoProfissionalViewModel>(CurriculoProfissionalCadastro);
                 }

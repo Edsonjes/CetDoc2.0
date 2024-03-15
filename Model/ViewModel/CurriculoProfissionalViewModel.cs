@@ -8,10 +8,12 @@ namespace Dominio.ViewModel
 {
 	public class CurriculoProfissionalViewModel
 	{
-		public QuestoesViewModel Questoes { get; set; }
-		public List<QuestoesViewModel> ListQuestoes { get; set; } = new();
-		public PessoaViewModel Pessoa { get; set; }
-		public string Pontuacao { get; set; }
-		
-	}
+
+        public PessoaViewModel Pessoa { get; set; }
+
+        public List<QuestoesViewModel> ListQuestoes { get; set; } = new();
+
+        //public string Pontuacao { get; set; }
+
+    }
 }

@@ -12,9 +12,10 @@ namespace Dominio.ViewModel
 		public string Nome { get; set; }
 		public string Email { get; set; }
 		public string Telefone { get; set; }
-		public string Cpf { get; set; }
-		public string Etinia { get; set; }
-		public string Sexo { get; set; }
-		public string DataNascimento { get; set; }
+		public string CPF { get; set; }
+		public string Cep { get; set; }
+		public string Rua { get; set; }
+		public string Uf { get; set; }
+
 	}
 }

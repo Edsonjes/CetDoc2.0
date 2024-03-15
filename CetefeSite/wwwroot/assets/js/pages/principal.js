@@ -68,23 +68,23 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 var somarPonto = 0;
-               
+
                 ['Idade', 'Sexo', 'Escolaridade', 'Raca', 'EstadoCivil', 'Moradia', 'Filhos', 'Trabalho', 'DeficienciaVisual', 'DeficienciaAuditiva', 'opcoesDeTrabalho', 'DeficienciaAuditiva', 'DeficienciaFisica', 'DeficienciaIntelectual', 'Autimos',
-                        'passeLivre'].forEach(function (nome) {
-                    var opcoesSelecionadas = document.querySelectorAll('input[name="' + nome + '"]:checked');
+                    'passeLivre'].forEach(function (nome) {
+                        var opcoesSelecionadas = document.querySelectorAll('input[name="' + nome + '"]:checked');
 
-                    opcoesSelecionadas.forEach(function (opcao) {
-                        var idQuestaoSelecionada = parseInt(opcao.id); // Supondo que o id do input seja o idQuestao
-                        var questaoEncontrada = data.find(function (item) {
-                            return item.idQuestao === idQuestaoSelecionada;
+                        opcoesSelecionadas.forEach(function (opcao) {
+                            var idQuestaoSelecionada = parseInt(opcao.id); // Supondo que o id do input seja o idQuestao
+                            var questaoEncontrada = data.find(function (item) {
+                                return item.idQuestao === idQuestaoSelecionada;
+                            });
+
+                            if (questaoEncontrada) {
+                                somarPonto += parseInt(questaoEncontrada.pontuacao); // Converter para número antes de somar
+                                totalpontos = somarPonto;
+                            }
                         });
-
-                        if (questaoEncontrada) {
-                            somarPonto += parseInt(questaoEncontrada.pontuacao); // Converter para número antes de somar
-                            totalpontos = somarPonto;
-                        }
                     });
-                });
                 // Exemplo de uso dos pontos somados (você pode ajustar conforme necessário)
                 console.log('Soma dos Pontos: ' + somarPonto);
             },
@@ -104,12 +104,7 @@ $(document).ready(function () {
 
         // Serializa os dados do formulário em um objeto
         var formData = $("#formCadPessoal").serializeArray().reduce(function (obj, item) {
-            // Verifica se o input é do tipo "text"
-            if (item.type === "text") {
-                obj[item.name] = {
-                    value: item.value,
-                };
-            }
+            obj[item.name] = item.value;
             return obj;
         }, {});
 
@@ -133,19 +128,46 @@ $(document).ready(function () {
             }
         });
 
-        // Mesclar os objetos formData e radioCheckboxData
-        Object.assign(formData, radioCheckboxData);
+        // Atualiza os dados do formulário com os dados do radio e checkbox
+        formData = Object.assign(formData, radioCheckboxData);
 
-        // Adiciona a pontuação ao objeto
-        formData.pontuacao = totalpontos;
+        // Cria a lista de questões
+        var listQuest = [];
+        for (var key in radioCheckboxData) {
+            if (radioCheckboxData.hasOwnProperty(key)) {
+                radioCheckboxData[key].forEach(function (item) {
+                    listQuest.push({
+                        IdQuestao: item.id,
+                        Nome: item.value
+                    });
+                });
+            }
+        }
 
-        console.log(formData);
+        // Cria o objeto CurriculoProfissionalViewModel
+        var cv = {
+            ListQuestoes: listQuest, // Lista de questões
+            Pessoa: {
+                Nome: formData.Nome,
+                Email: formData.Email,
+                Telefone: formData.Telefone,
+                Bairro: formData.bairro,
+                Rua: formData.rua,
+                CPF: formData.CPF,
+                Cep: formData.cep,
+                Uf: formData.uf,
+            },
+            Pontuacao: totalpontos
+        };
 
+        var data = { cv: cv }
+
+        // Envia os dados para o servidor
         $.ajax({
             url: 'http://localhost:5159/Home/SalvarFormulario',
-            type: 'POST',
-            contentType: 'application/json', // Define o tipo de conteúdo como JSON
-            data: JSON.stringify(formData), // Converte o objeto em uma string JSON
+            method: 'POST',
+            data: data,
+
             success: function (response) {
                 console.log("Sucesso", response);
             },
